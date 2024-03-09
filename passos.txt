@@ -9,3 +9,5 @@ Executar o projeto
 cd .\Pokedex\
 dotnet run
 dotnet watch run 
+
+IR PARA WWWR00T/JS - PG 157

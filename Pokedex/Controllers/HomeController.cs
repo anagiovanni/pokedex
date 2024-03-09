@@ -16,25 +16,44 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        List<Pokemon> pokemons = [];
-        using  (StreamReader leitor = new("Data\\pokemons.json"))
-        {
-            string dados = leitor.ReadToEnd();
-            pokemons = JsonSerializer.Deserialize<List<Pokemon>>(dados);
-        }
-        List<Tipo> tipos = [];  
-        using (StreamReader leitor = new("Data\\tipos.json"))
-        {
-            string dados = leitor.ReadToEnd();
-            tipos = JsonSerializer.Deserialize<List<Tipo>>(dados);
-        }
+        List<Pokemon> pokemons = GetPokemons();
+        List<Tipo> tipos = GetTipos();
         ViewData["Tipos"] = tipos;
         return View(pokemons);
     }
 
     public IActionResult Details(int id)
     {
-        return View();
+        List<Pokemon> pokemons = GetPokemons();
+        List<Tipo> tipos = GetTipos();
+        DetailsVM details = new()
+        {
+            Tipos = tipos,
+            Atual = pokemons.FirstOrDefault(p => p.Numero == id),
+            Anterior = pokemons.OrderByDescending(p => p.Numero).FirstOrDefault(p => p.Numero < id),
+            Proximo = pokemons.OrderBy(p => p.Numero).FirstOrDefault(p => p.Numero > id)
+        };
+        return View(details);
+    }
+
+    private List<Pokemon> GetPokemons()
+    {
+        List<Pokemon> pokemons = [];
+        using(StreamReader leitor = new ("Data\\pokemons.json"))
+        {
+            string dados = leitor.ReadToEnd();
+            pokemons = JsonSerializer.Deserialize<List<Pokemon>>(dados);
+        }
+    }
+
+    private List<Pokemon> GetTipos()
+    {
+        List<Tipo> tipos = [];
+        using(StreamReader leitor = new("Data\\tipos.json"))
+        {
+            string dados = leitor.ReadToEnd();
+            tipos = JsonSerializer.Deserialize<List<Tipo>>(dados);
+        }
     }
 
     public IActionResult Privacy()
