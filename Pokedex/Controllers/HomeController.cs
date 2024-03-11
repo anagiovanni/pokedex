@@ -38,21 +38,19 @@ public class HomeController : Controller
 
     private List<Pokemon> GetPokemons()
     {
-        List<Pokemon> pokemons = [];
         using(StreamReader leitor = new ("Data\\pokemons.json"))
         {
             string dados = leitor.ReadToEnd();
-            pokemons = JsonSerializer.Deserialize<List<Pokemon>>(dados);
+            return JsonSerializer.Deserialize<List<Pokemon>>(dados);
         }
     }
 
-    private List<Pokemon> GetTipos()
+    private List<Tipo> GetTipos()
     {
-        List<Tipo> tipos = [];
         using(StreamReader leitor = new("Data\\tipos.json"))
         {
             string dados = leitor.ReadToEnd();
-            tipos = JsonSerializer.Deserialize<List<Tipo>>(dados);
+            return JsonSerializer.Deserialize<List<Tipo>>(dados);
         }
     }
 

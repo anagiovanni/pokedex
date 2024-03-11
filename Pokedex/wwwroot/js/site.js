@@ -17,7 +17,22 @@
     {
         if(buttons[i].id == `btn-${type}`)
         {
-            //Continue aqui Giovanni Futuro - Vá Pg 157
+            buttons[i].classList.remove("btn-sm");
+            buttons[i].classList.add("btn-md")
         }
-    }
+        else
+        {
+            buttons[i].classList.remove("btn-md");
+            buttons[i].classList.add("btn-sm")
+        }
+    };
+    if(type == "all")
+    {
+        document.getElementById("btn-all").classList.remove("btn-sm");
+        document.getElementById("btn-all").classList.add("btn-md");
+    };
+    if(count == 0)
+        document.getElementById("zeroPokemon").classList.remove("d-none")
+    else
+    document.getElementById("zeroPokemon").classList.add("d-none")
 }
